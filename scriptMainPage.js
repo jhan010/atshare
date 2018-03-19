@@ -22,6 +22,7 @@ MainPage.prototype = {
     this._peer.on('open', () => {
       //シグナリングサーバ接続+準備完了時
       var id = this._peer.id;
+      callReady();
     });
     this._peer.on('call', function(call){
       //通話着信時
@@ -137,6 +138,29 @@ MainPage.prototype = {
       else{
         console.log("getUserInfoList Error: " + errString);
       }
+    });
+  },
+
+  callReady: function(){
+    // Get audio/video stream
+    const audioSource = $('#audioSource').val();
+    const videoSource = $('#videoSource').val();
+    const constraints = {
+        audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+        video: {deviceId: videoSource ? {exact: videoSource} : undefined},
+    };
+
+    var _this = this;
+    navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+      $('#my-video').get(0).srcObject = stream;
+      _this._localStream = stream;
+
+      if (existingCall) {
+          existingCall.replaceStream(stream);
+          return;
+      }
+    }).catch(err => {
+        console.error(err);
     });
   },
 
