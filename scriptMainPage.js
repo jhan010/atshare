@@ -42,6 +42,44 @@ MainPage.prototype = {
       alert("シグナリングサーバと切断しました");
     });
 
+    // set up audio and video input selectors
+    const audioSelect = $('#audioSource');
+    const videoSelect = $('#videoSource');
+    const selectors = [audioSelect, videoSelect];
+
+    navigator.mediaDevices.enumerateDevices().then(deviceInfos => {
+      const values = selectors.map(select => select.val() || '');
+      selectors.forEach(select => {
+        const children = select.children(':first');
+        while (children.length) {
+            select.remove(children);
+        }
+      });
+
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+          const deviceInfo = deviceInfos[i];
+          const option = $('<option>').val(deviceInfo.deviceId);
+
+          if (deviceInfo.kind === 'audioinput') {
+              option.text(deviceInfo.label ||
+                  'Microphone ' + (audioSelect.children().length + 1));
+              audioSelect.append(option);
+          } else if (deviceInfo.kind === 'videoinput') {
+              option.text(deviceInfo.label ||
+                  'Camera ' + (videoSelect.children().length + 1));
+              videoSelect.append(option);
+          }
+      }
+
+      selectors.forEach((select, selectorIndex) => {
+          if (Array.prototype.slice.call(select.children()).some(n => {
+              return n.value === values[selectorIndex];
+          })) {
+              select.val(values[selectorIndex]);
+          }
+      });
+    });
+
     this._userInfoData = userInfoData;
     this.updateUserList(this);
 
