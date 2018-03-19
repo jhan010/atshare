@@ -12,6 +12,8 @@ function MainPage() {
 
 MainPage.prototype = {
   init: function(userInfoData) {
+    var _this = this;
+
     this._peer = new Peer({
       id:    userInfoData["phoneId"],
       key:   'b965b655-a8a7-4699-ac91-eb3792cc851d',
@@ -22,7 +24,7 @@ MainPage.prototype = {
     this._peer.on('open', () => {
       //シグナリングサーバ接続+準備完了時
       var id = this._peer.id;
-      callReady();
+      _this.callReady();
     });
     this._peer.on('call', function(call){
       //通話着信時
