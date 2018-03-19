@@ -59,8 +59,14 @@ PersistData.prototype = {
     // Save the KiiObject.
     kiiObj.save({
       success: function(theObject) {
-        var id = theObject.getID();
-        callback(true, "", id);
+        var userInfoData = 
+        {id: theObject.getID(),
+         uri: theObject.objectURI(),
+         user: theObject.get("user"),
+         loggedinTime: theObject.get("loggedinTime"),
+         phoneId: theObject.get("phoneId"),
+        }
+        callback(true, "", userInfoData);
       },
       failure: function(theObject, errorString) {
         callback(false, errorString, null);

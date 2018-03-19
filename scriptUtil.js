@@ -105,6 +105,7 @@ function getDateString() {
   //サーバ日時が取れない場合はクライアント日時を返す
   var retDate = new Date(result);
   if(retDate == null || 0 == retDate.getTime()){
+      console.log("getDateString: ServerTime Error");
       retDate = new Date();
   }
 

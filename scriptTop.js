@@ -30,10 +30,9 @@ function performLogIn() {
 
   persistIF.login(username, password, function(result, errString, username){
     if(result == true){
-      persistIF.getUserInfo(username, function(result, errString, userData){
+      persistIF.getUserInfo(username, function(result, errString, userInfoData){
         if(result == true){
-            var userInfoPersistId = userData["id"];
-            openMainPage(username, userInfoPersistId);
+            openMainPage(userInfoData);
         }
         else{
           //登録されていないなら再登録
@@ -64,9 +63,9 @@ function performSignUp() {
 function createUserInfo_OpenMainPage(username){
   var timeString = getDateString();
   var phoneId = username + '_phoneid_' + timeString;
-  persistIF.createUserInfo(username, timeString, phoneId, function (result, errString, userInfoPersistId) {
+  persistIF.createUserInfo(username, timeString, phoneId, function (result, errString, userInfoData) {
     if(result == true){
-      openMainPage(username, userInfoPersistId);
+      openMainPage(userInfoData);
     }
     else{
       alert(errString);
@@ -76,7 +75,7 @@ function createUserInfo_OpenMainPage(username){
 
 //--------------------------------------------------------------------------------
 //メインページ表示
-function openMainPage(loginUser, userInfoPersistId) {
+function openMainPage(userInfoData) {
   displayControl(ENUM_DISPLAY.MAIN);
 
   document.getElementById("username-field").value = "";
@@ -85,7 +84,7 @@ function openMainPage(loginUser, userInfoPersistId) {
   if(!mainPage) {
     mainPage = new MainPage();
   }
-  mainPage.init(loginUser, userInfoPersistId);
+  mainPage.init(userInfoData);
 
 }
 
