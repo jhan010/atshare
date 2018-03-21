@@ -174,6 +174,8 @@ MainPage.prototype = {
   },
 
   startTalk: function(callTalking) {
+    alert("startTalk_1");
+
     // Hang up on an existing call if present
     if (this._existingCall) {
       this._existingCall.close();
@@ -186,8 +188,8 @@ MainPage.prototype = {
     this._existingCall = callTalking;
     callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
 
-    alert("startTalk");
     this.displayControl(this.ENUM_DISPLAY_CALLTALKING);
+    alert("startTalk_2");
   },
 
   callStop: function() {
