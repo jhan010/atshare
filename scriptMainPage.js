@@ -180,16 +180,21 @@ MainPage.prototype = {
     if (this._existingCall) {
       this._existingCall.close();
     }
+    alert("startTalk_2");
+
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
         $('#their-video').get(0).srcObject = stream;
     });
+    alert("startTalk_3");
 
     this._existingCall = callTalking;
     callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
 
+    alert("startTalk_4");
+    
     this.displayControl(this.ENUM_DISPLAY_CALLTALKING);
-    alert("startTalk_2");
+    alert("startTalk_5");
   },
 
   callStop: function() {
