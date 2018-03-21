@@ -156,8 +156,7 @@ MainPage.prototype = {
 
     //streamの停止
     if(this._localStream) {
-      this._localStream.getTracks().forEach(function(track) {
-          alert("track stop");
+      this._localStream.getTracks().forEach(track => {
           track.stop();
       });
     }
