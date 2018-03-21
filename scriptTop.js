@@ -140,6 +140,9 @@ function callStop() {
   mainPage.callStop();
 }
 
+function testCallReady() {
+  mainPage.callReady();
+}
 function testClose() {
   mainPage.displayControl(mainPage.ENUM_DISPLAY_CALLREADY);
 }

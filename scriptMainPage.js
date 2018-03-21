@@ -82,8 +82,8 @@ MainPage.prototype = {
       });
     });
 
-    this._audioSelect.on('change', this.callReady());
-    this._videoSelect.on('change', this.callReady());
+    this._audioSelect.on('change', testCallReady);
+    this._videoSelect.on('change', testCallReady);
 
     this._userInfoData = userInfoData;
     this.updateUserList(this);
@@ -149,7 +149,6 @@ MainPage.prototype = {
     // Get audio/video stream
     const audioSource = $('#audioSource').val();
     const videoSource = $('#videoSource').val();
-alert(videoSource);
     const constraints = {
         audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
         video: {deviceId: videoSource ? {exact: videoSource} : undefined},
@@ -157,7 +156,6 @@ alert(videoSource);
 
     var _this = this;
     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
-alert(_this);
       $('#my-video').get(0).srcObject = stream;
       _this._localStream = stream;
 
@@ -167,7 +165,6 @@ alert(_this);
       }
     }).catch(err => {
         console.error(err);
-        alert(err);
     });
   },
 
