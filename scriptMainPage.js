@@ -29,7 +29,6 @@ MainPage.prototype = {
     });
     this._peer.on('call', function(call){
       //通話着信時
-      alert("call!!!!!");
       call.answer(this._localStream);
       _this.startTalk(call);
     });
@@ -168,13 +167,9 @@ MainPage.prototype = {
   },
 
   callToUser: function(username){
-    alert("callToUser_1");
     var userInfoData = this._userInfoMap.get(username);
-    alert("callToUser_2");    
     const callTalking = this._peer.call(userInfoData["phoneId"], this._localStream);
-    alert("callToUser_3");
-    startTalk(callTalking);
-    alert("callToUser_4");
+    this.startTalk(callTalking);
   },
 
   startTalk: function(callTalking) {
