@@ -154,6 +154,14 @@ MainPage.prototype = {
         video: {deviceId: videoSource ? {exact: videoSource} : undefined},
     };
 
+    //streamの停止
+    if(this._localStream) {
+      this._localStream.getTracks().forEach(function(track) {
+          alert("track stop");
+          track.stop();
+      });
+    }
+
     var _this = this;
     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
       $('#my-video').get(0).srcObject = stream;
