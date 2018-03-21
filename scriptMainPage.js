@@ -1,18 +1,15 @@
 //--------------------------------------------------------------------------------
 //ノート編集(メインページ) クラス
 function MainPage() {
-  //永続化用データ
-  var _userInfoData = null;
-  var _userListUpdTimer = null;
-  var _userInfoMap = null;
-  var _peer = null;
-  var _localStream = null;
-  var _existingCall = null;
+  this._userInfoData = null;
+  this._userListUpdTimer = null;
+  this._userInfoMap = null;
+  this._peer = null;
+  this._localStream = null;
+  this._existingCall = null;
 
-  ENUM_DISPLAY = {
-    CALLREADY : 0,
-    CALLTALKING : 1,
-  };
+  this.ENUM_DISPLAY_CALLREADY = 0;
+  this.ENUM_DISPLAY_CALLTALKING = 1;
 }
 
 MainPage.prototype = {
@@ -28,7 +25,6 @@ MainPage.prototype = {
     this._peer.on('open', () => {
       //シグナリングサーバ接続+準備完了時
       var id = _this._peer.id;
-      alert(id);
       _this.callReady();
     });
     this._peer.on('call', function(call){
@@ -188,22 +184,22 @@ MainPage.prototype = {
     });
 
     this._existingCall = callTalking;
-    callTalking.on('close', this.displayControl(this.ENUM_DISPLAY.CALLREADY));
-    this.displayControl(this.ENUM_DISPLAY.CALLTALKING);
+    callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
+    this.displayControl(this.ENUM_DISPLAY_CALLTALKING);
   },
 
   callStop: function() {
     this._existingCall.close();
-    this.displayControl(this.ENUM_DISPLAY.CALLREADY);
+    this.displayControl(this.ENUM_DISPLAY_CALLREADY);
   },
 
   displayControl: function(displayType) {  
 
     switch(displayType) {
-      case this.ENUM_DISPLAY.CALLREADY:
+      case this.ENUM_DISPLAY_CALLREADY:
         document.getElementById("callstop").style.display = "none";
         break;
-      case this.ENUM_DISPLAY.CALLTALKING:
+      case this.ENUM_DISPLAY_CALLTALKING:
         document.getElementById("callstop").style.display = "block";
         break;
     }
