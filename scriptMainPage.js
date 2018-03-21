@@ -149,6 +149,7 @@ MainPage.prototype = {
     // Get audio/video stream
     const audioSource = $('#audioSource').val();
     const videoSource = $('#videoSource').val();
+alert(videoSource);
     const constraints = {
         audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
         video: {deviceId: videoSource ? {exact: videoSource} : undefined},
@@ -156,6 +157,7 @@ MainPage.prototype = {
 
     var _this = this;
     navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+alert(_this);
       $('#my-video').get(0).srcObject = stream;
       _this._localStream = stream;
 
@@ -165,6 +167,7 @@ MainPage.prototype = {
       }
     }).catch(err => {
         console.error(err);
+        alert(err);
     });
   },
 
@@ -182,7 +185,6 @@ MainPage.prototype = {
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
-        alert("theirVideo!!!");
         $('#their-video').get(0).srcObject = stream;
     });
 
