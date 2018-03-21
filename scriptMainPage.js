@@ -28,13 +28,14 @@ MainPage.prototype = {
     //SkyWay イベントハンドラ
     this._peer.on('open', () => {
       //シグナリングサーバ接続+準備完了時
-      var id = this._peer.id;
+      var id = _this._peer.id;
+      alert(id);
       _this.callReady();
     });
     this._peer.on('call', function(call){
       //通話着信時
       call.answer(this._localStream);
-      startTalk(call);
+      _this.startTalk(call);
     });
     this._peer.on('error', function(err){
       //エラー発生時
