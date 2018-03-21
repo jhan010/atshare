@@ -1,215 +1,64 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
+<html>
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>＠SHARE</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-<style type="text/css">
-<!--
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-
-/*ログインページ用*/
-.app-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', Helvetica,Arial, 'Meiryo', 'Hiragino Maru Gothic Pro', 'MS PGothic', 'Microsoft YaHei', sans-serif;
-    background-color: #fff;
-    width: 100%;
-    overflow:auto;
-    top: 40px;
-    bottom: 0;
-}
-.input-group {
-    margin: 20px;
-    font-size: 16px;
-    color: #555;
-    line-height: 30px;
-}
-.text-edit {
-    margin: 5px 0px;
-    font-size: 16px;
-    padding: 5px;
-    width: 100%;
-}
-.login-button {
-    border: 2px groove #d9580b;
-    font-size: 18px;
-    color: #fff;
-    text-align: center;
-    text-shadow: 1px 1px 0 #666;
-    text-decoration: none;
-    padding: 0;
-    margin: 10px 0px;
-    line-height: 35px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-
-.login-button:link,
-.login-button:visited{
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f3a64b), color-stop(1, #d9580b));
-    background: -webkit-linear-gradient(top, #f3a64b 0%, #d9580b 100%);
-    background: -moz-linear-gradient(top, #f3a64b 0%, #d9580b 100%);
-    background: -o-linear-gradient(top, #f3a64b 0%, #d9580b 100%);
-    background: -ms-linear-gradient(top, #f3a64b 0%, #d9580b 100%);
-    background: linear-gradient(top, #f3a64b 0%, #d9580b 100%);
-}
-.login-button:hover{
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f4b162), color-stop(1, #f06920));
-    background: -webkit-linear-gradient(top, #f4b162 0%, #f06920 100%);
-    background: -moz-linear-gradient(top, #f4b162 0%, #f06920 100%);
-    background: -o-linear-gradient(top, #f4b162 0%, #f06920 100%);
-    background: -ms-linear-gradient(top, #f4b162 0%, #f06920 100%);
-    background: linear-gradient(top, #f4b162 0%, #f06920 100%);
-}
-.login-button:active{
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eb860f), color-stop(1, #b14409));
-    background: -webkit-linear-gradient(top, #f2890e 0%, #b14409 100%);
-    background: -moz-linear-gradient(top, #f2890e 0%, #b14409 100%);
-    background: -o-linear-gradient(top, #f2890e 0%, #b14409 100%);
-    background: -ms-linear-gradient(top, #f2890e 0%, #b14409 100%);
-    background: linear-gradient(top, #f2890e 0%, #b14409 100%);
-}
-
-
-/*タッチデバイスだけホバー効果(:hoverにすると競合する.:hoverはPCサイト用HTMLだけに設定する)*/
-.addgridstyle.hover {
-    background: #EEEEEE;
-    color: white;
-}
-
-/* ノート編集(メイン画面) */
-.footer {
-  position: absolute;
-  bottom: 0;
-}
-
-/* 通話画面 */
-#my-video {
-    margin-top: 15px;
-    width: 280px;
-    height: auto;
-    background-color: #eee;
-}
-#their-video {
-    width: 100%;
-    height: 75%;
-    max-height: 480px;
-    background-color: #eee;
-}
-#video-container {
-    padding: 25px;
-    text-align: center;
-}
-
-.icon-color-ok {
-    color: green;
-}
-.icon-color-ng {
-    color: red;
-}
-
--->
-</style>
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <title>SkyWay - Video chat example</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
+    <script type="text/javascript" src="key.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 </head>
+
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="javascript:dispHomePage()">＠ＳＨＡＲＥ</a>
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navClose">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-    </div>
-    <div id="header-toppage" style="display: none">
-      <div class="collapse navbar-collapse" id="navClose">
-        <ul class="nav navbar-nav navbar-right">
-          <li style="display:none;" id="selectDelete"><a href="javascript:selectDelete()" style="font-weight:bold; color:orange;"><span class="glyphicon glyphicon-trash"></span> 削除</a></li>
-          <li><a href="javascript:selectMode()" style="font-weight:bold; color:skyblue;" id="selectModeLink"><span class="glyphicon glyphicon-ok-circle" id="selectModeIcon"></span> 選択</a></li>
-          <li><a href="javascript:performLogOut()"><span class="glyphicon glyphicon-log-out"></span> ログアウト</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+<div class="pure-g">
 
-<div class="container-fluid">
-
-  <!-- ログイン画面 -->
-  <div id="login-page" class="app-body"  style="display: block">
-    <div class="input-group">
-        ユーザID:<br>
-        <input id="username-field" type="text" class="text-edit" autofocus/>
-    </div>
-    <div class="input-group">
-        パスワード:<br>
-        <input id="password-field" type="password" class="text-edit"/>
-    </div>
-    <div class="input-group">
-        <a id="login-button" href="javascript:performLogIn()" class="login-button">ログイン</a>
-        <a id="register-button" href="javascript:performSignUp()" class="login-button">新規登録</a>
-    </div>
-  </div>
-
-  <!-- メイン画面 -->
-  <div id="main-page" style="display: none">
-    <div class="row">
-      <div id="video-container" class="col-sm-9">
+    <!-- Video area -->
+    <div class="pure-u-2-3" id="video-container">
         <video id="their-video" autoplay></video>
         <video id="my-video" muted="true" autoplay></video>
-      </div>
-      <div id="sidebar" class="col-sm-3">
-        <button id="callstop" style="display: none" type="button" class="btn btn-danger" onclick="javascript:callStop()">通話終了</button>
-        <ul class="list-group" id="phone-user-list">
-        <!--
-          <li class="list-group-item"><span class="glyphicon glyphicon-ok-circle icon-color-ok"></span>username
-            <div class="pull-right">
-              <a href="javascript:callToUser('username')"><span class="glyphicon glyphicon-earphone"></span></a>
-            </div>
-          </li>
-        -->
-        </ul>
+    </div>
+
+    <!-- Steps -->
+    <div class="pure-u-1-3">
+        <h2>SkyWay Video Chat</h2>
+
         <div class="select">
             <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
         </div>
+
         <div class="select">
             <label for="videoSource">Video source: </label><select id="videoSource"></select>
         </div>
-      </div>
-    </div>
-  </div>
 
+        <!-- Get local audio/video stream -->
+        <div id="step1">
+            <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+            <div id="step1-error">
+                <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+                <a href="#" class="pure-button pure-button-error" id="step1-retry">Try again</a>
+            </div>
+        </div>
+
+        <!-- Make calls to others -->
+        <div id="step2">
+            <p>Your id: <span id="my-id">...</span></p>
+            <p>Share this id with others so they can call you.</p>
+            <h3>Make a call</h3>
+            <form id="make-call" class="pure-form">
+                <input type="text" placeholder="Call user id..." id="callto-id">
+                <button href="#" class="pure-button pure-button-success" type="submit">Call</button>
+            </form>
+        </div>
+
+        <!-- Call in progress -->
+        <div id="step3">
+            <p>Currently in call with <span id="their-id">...</span></p>
+            <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+        </div>
+    </div>
 </div>
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
-  <script src="KiiSDK.min.js"></script>
-  <script src="scriptUtil.js"></script>
-  <script src="scriptPersistData.js"></script>
-  <script src="scriptMainPage.js"></script>
-  <script src="scriptTop.js"></script>
- 
-  </body>
+</body>
 </html>
