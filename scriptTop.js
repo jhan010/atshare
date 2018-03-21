@@ -141,6 +141,5 @@ function callStop() {
 }
 
 function testClose() {
-  alert("close!!!");
   mainPage.displayControl(mainPage.ENUM_DISPLAY_CALLREADY);
 }

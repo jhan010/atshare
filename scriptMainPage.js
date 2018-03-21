@@ -168,38 +168,33 @@ MainPage.prototype = {
   },
 
   callToUser: function(username){
+    alert("callToUser_1");
     var userInfoData = this._userInfoMap.get(username);
-    
+    alert("callToUser_2");    
     const callTalking = this._peer.call(userInfoData["phoneId"], this._localStream);
+    alert("callToUser_3");
     startTalk(callTalking);
+    alert("callToUser_4");
   },
 
   startTalk: function(callTalking) {
-    alert("startTalk_1");
+    alert("startTalk!!!");
 
     // Hang up on an existing call if present
     if (this._existingCall) {
-      alert("startTalk_1-1");
       this._existingCall.close();
     }
-    alert("startTalk_2");
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
-      alert("startTalk_2-1");
         $('#their-video').get(0).srcObject = stream;
     });
-    alert("startTalk_3");
 
     this._existingCall = callTalking;
-    alert("startTalk_4");
     //callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
     callTalking.on('close', testClose);
 
-    alert("startTalk_5");
-    
     this.displayControl(this.ENUM_DISPLAY_CALLTALKING);
-    alert("startTalk_6");
   },
 
   callStop: function() {
