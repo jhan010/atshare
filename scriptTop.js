@@ -62,7 +62,7 @@ function performSignUp() {
 
 function createUserInfo_OpenMainPage(username){
   var timeString = getDateString();
-  var phoneId = username + '_phoneid_' + timeString;
+  var phoneId = 'PHONEID' + username + timeString;
   persistIF.createUserInfo(username, timeString, phoneId, function (result, errString, userInfoData) {
     if(result == true){
       openMainPage(userInfoData);
