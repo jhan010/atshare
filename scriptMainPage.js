@@ -29,6 +29,7 @@ MainPage.prototype = {
     });
     this._peer.on('call', function(call){
       //通話着信時
+      alert("call!!!!!");
       call.answer(this._localStream);
       _this.startTalk(call);
     });
@@ -178,23 +179,26 @@ MainPage.prototype = {
 
     // Hang up on an existing call if present
     if (this._existingCall) {
+      alert("startTalk_1-1");
       this._existingCall.close();
     }
     alert("startTalk_2");
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
+      alert("startTalk_2-1");
         $('#their-video').get(0).srcObject = stream;
     });
     alert("startTalk_3");
 
     this._existingCall = callTalking;
+    alert("startTalk_4");
     callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
 
-    alert("startTalk_4");
+    alert("startTalk_5");
     
     this.displayControl(this.ENUM_DISPLAY_CALLTALKING);
-    alert("startTalk_5");
+    alert("startTalk_6");
   },
 
   callStop: function() {
