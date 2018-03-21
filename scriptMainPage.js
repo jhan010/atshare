@@ -7,6 +7,8 @@ function MainPage() {
   this._peer = null;
   this._localStream = null;
   this._existingCall = null;
+  this._audioSelect = null;
+  this._videoSelect = null;
 
   this.ENUM_DISPLAY_CALLREADY = 0;
   this.ENUM_DISPLAY_CALLTALKING = 1;
@@ -43,9 +45,9 @@ MainPage.prototype = {
     });
 
     // set up audio and video input selectors
-    const audioSelect = $('#audioSource');
-    const videoSelect = $('#videoSource');
-    const selectors = [audioSelect, videoSelect];
+    this._audioSelect = $('#audioSource');
+    this._videoSelect = $('#videoSource');
+    const selectors = [this._audioSelect, this._videoSelect];
 
     navigator.mediaDevices.enumerateDevices().then(deviceInfos => {
       const values = selectors.map(select => select.val() || '');
@@ -62,12 +64,12 @@ MainPage.prototype = {
 
           if (deviceInfo.kind === 'audioinput') {
               option.text(deviceInfo.label ||
-                  'Microphone ' + (audioSelect.children().length + 1));
-              audioSelect.append(option);
+                  'Microphone ' + (this._audioSelect.children().length + 1));
+                this._audioSelect.append(option);
           } else if (deviceInfo.kind === 'videoinput') {
               option.text(deviceInfo.label ||
-                  'Camera ' + (videoSelect.children().length + 1));
-              videoSelect.append(option);
+                  'Camera ' + (this._videoSelect.children().length + 1));
+                this._videoSelect.append(option);
           }
       }
 
@@ -80,8 +82,8 @@ MainPage.prototype = {
       });
     });
 
-    videoSelect.on('change', this.callReady());
-    audioSelect.on('change', this.callReady());
+    this._audioSelect.on('change', this.callReady());
+    this._videoSelect.on('change', this.callReady());
 
     this._userInfoData = userInfoData;
     this.updateUserList(this);
