@@ -173,8 +173,6 @@ MainPage.prototype = {
   },
 
   startTalk: function(callTalking) {
-    alert("startTalk!!!");
-
     // Hang up on an existing call if present
     if (this._existingCall) {
       this._existingCall.close();
@@ -182,6 +180,7 @@ MainPage.prototype = {
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
+        alert("theirVideo!!!");
         $('#their-video').get(0).srcObject = stream;
     });
 
