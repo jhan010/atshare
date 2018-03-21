@@ -19,8 +19,7 @@ MainPage.prototype = {
   init: function(userInfoData) {
     var _this = this;
 
-    this._peer = new Peer({
-      id:    userInfoData["phoneId"],
+    this._peer = new Peer(userInfoData["phoneId"],{
       key:   'b965b655-a8a7-4699-ac91-eb3792cc851d',
       debug: 3,
     });
