@@ -193,7 +193,8 @@ MainPage.prototype = {
 
     this._existingCall = callTalking;
     alert("startTalk_4");
-    callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
+    //callTalking.on('close', this.displayControl(this.ENUM_DISPLAY_CALLREADY));
+    callTalking.on('close', testClose);
 
     alert("startTalk_5");
     

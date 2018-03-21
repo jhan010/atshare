@@ -139,3 +139,8 @@ function callToUser(username) {
 function callStop() {
   mainPage.callStop();
 }
+
+function testClose() {
+  alert("close!!!");
+  mainPage.displayControl(mainPage.ENUM_DISPLAY_CALLREADY);
+}
