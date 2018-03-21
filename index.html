@@ -179,19 +179,19 @@ body {
         <video id="my-video" muted="true" autoplay></video>
       </div>
       <div id="sidebar" class="col-sm-3">
+        <button id="callstop" style="display: none" type="button" class="btn btn-danger" onclick="javascript:callStop()">通話終了</button>
         <ul class="list-group" id="phone-user-list">
-          <li class="list-group-item"><span class="glyphicon glyphicon-ok-circle icon-color-ok"></span> New
+        <!--
+          <li class="list-group-item"><span class="glyphicon glyphicon-ok-circle icon-color-ok"></span>username
             <div class="pull-right">
-              <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-earphone"></span></a>
+              <a href="javascript:callToUser('username')"><span class="glyphicon glyphicon-earphone"></span></a>
             </div>
           </li>
-          <li class="list-group-item"><span class="badge">5</span> Deleted</li> 
-          <li class="list-group-item"><span class="badge">3</span> Warnings</li> 
+        -->
         </ul>
         <div class="select">
             <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
         </div>
-
         <div class="select">
             <label for="videoSource">Video source: </label><select id="videoSource"></select>
         </div>

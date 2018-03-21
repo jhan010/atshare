@@ -155,7 +155,7 @@ PersistData.prototype = {
              loggedinTime: kiiObj.get("loggedinTime"),
              phoneId: kiiObj.get("phoneId"),
             }
-          userInfoMap.set(kiiObj.getID(), loadData);
+          userInfoMap.set(kiiObj.get("user"), loadData);
         }
         callback(true, "", userInfoMap);
 

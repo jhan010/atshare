@@ -10,7 +10,7 @@ $(document).ready(function () {
   ENUM_DISPLAY = {
     LOGIN : 0,
     MAIN : 1,
-   };
+  };
 
   /*タッチデバイスだけボタン系コントロールにホバー効果*/
   $('a, input[type="button"], input[type="submit"], button, .touch-hover')
@@ -130,4 +130,12 @@ function displayControl(displayType) {
       break;
   }
 
+}
+
+function callToUser(username) {
+  mainPage.callToUser(username);
+}
+
+function callStop() {
+  mainPage.callStop();
 }

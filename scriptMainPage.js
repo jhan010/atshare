@@ -8,6 +8,11 @@ function MainPage() {
   var _peer = null;
   var _localStream = null;
   var _existingCall = null;
+
+  ENUM_DISPLAY = {
+    CALLREADY : 0,
+    CALLTALKING : 1,
+  };
 }
 
 MainPage.prototype = {
@@ -35,10 +40,6 @@ MainPage.prototype = {
       //エラー発生時
       var errMessage = "エラー発生: " + err.message;
       alert(errMessage);
-    });
-    this._peer.on('close', function(){
-      //相手との切断時
-      alert("通話終了");
     });
     this._peer.on('disconnected', function(){
       //シグナリングサーバとの切断時
@@ -83,6 +84,9 @@ MainPage.prototype = {
       });
     });
 
+    videoSelect.on('change', this.callReady());
+    audioSelect.on('change', this.callReady());
+
     this._userInfoData = userInfoData;
     this.updateUserList(this);
 
@@ -119,7 +123,7 @@ MainPage.prototype = {
             <li class="list-group-item"><span class="glyphicon glyphicon-ok-circle icon-color-ok"></span>'
               + value["user"] +
               '<div class="pull-right"> \
-                <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-earphone"></span></a> \
+                <a href="javascript:callToUser(\'' + value["user"] + '\')"><span class="glyphicon glyphicon-earphone"></span></a> \
               </div> \
             </li>').get(0);
           }
@@ -166,21 +170,45 @@ MainPage.prototype = {
     });
   },
 
-  callToUser: function(userId){
-
+  callToUser: function(username){
+    var userInfoData = this._userInfoMap.get(username);
+    
+    const callTalking = this._peer.call(userInfoData["phoneId"], this._localStream);
+    startTalk(callTalking);
   },
 
-  startTalk: function(call) {
+  startTalk: function(callTalking) {
     // Hang up on an existing call if present
     if (this._existingCall) {
       this._existingCall.close();
     }
     // Wait for stream on the call, then set peer video display
-    call.on('stream', stream => {
+    callTalking.on('stream', stream => {
         $('#their-video').get(0).srcObject = stream;
     });
-  }
 
+    this._existingCall = callTalking;
+    callTalking.on('close', this.displayControl(this.ENUM_DISPLAY.CALLREADY));
+    this.displayControl(this.ENUM_DISPLAY.CALLTALKING);
+  },
+
+  callStop: function() {
+    this._existingCall.close();
+    this.displayControl(this.ENUM_DISPLAY.CALLREADY);
+  },
+
+  displayControl: function(displayType) {  
+
+    switch(displayType) {
+      case this.ENUM_DISPLAY.CALLREADY:
+        document.getElementById("callstop").style.display = "none";
+        break;
+      case this.ENUM_DISPLAY.CALLTALKING:
+        document.getElementById("callstop").style.display = "block";
+        break;
+    }
+  
+  },
 }
 
 
