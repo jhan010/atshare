@@ -159,9 +159,9 @@ MainPage.prototype = {
       $('#my-video').get(0).srcObject = stream;
       _this._localStream = stream;
 
-      if (existingCall) {
-          existingCall.replaceStream(stream);
-          return;
+      if (this._existingCall) {
+        this._existingCall.replaceStream(stream);
+        return;
       }
     }).catch(err => {
         console.error(err);
