@@ -31,6 +31,7 @@ MainPage.prototype = {
     });
     this._peer.on('call', function(call){
       //通話着信時
+      alert("着信 → answer:" + this._localStream);
       call.answer(this._localStream);
       _this.startTalk(call);
     });
@@ -182,7 +183,8 @@ MainPage.prototype = {
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
-        $('#their-video').get(0).srcObject = stream;
+      alert("stream受信:" + stream);
+      $('#their-video').get(0).srcObject = stream;
     });
 
     this._existingCall = callTalking;
