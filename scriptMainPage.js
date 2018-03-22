@@ -30,7 +30,13 @@ MainPage.prototype = {
       _this.callReady();
     });
     this._peer.on('call', function(call){
-      //通話着信時
+      if( ! $('#autoanswer').is(':checked') ) { 
+        //通話着信時
+        if (!window.confirm(call.peer + ' さんから呼出がありました。\n接続しますか？')) {
+          call.close();
+          return;
+        }
+      }
       call.answer(_this._localStream);
       _this.startTalk(call);
     });
