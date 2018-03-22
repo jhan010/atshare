@@ -16,7 +16,6 @@ function MainPage() {
 
 MainPage.prototype = {
   init: function(userInfoData) {
-    var _this = this;
 
     this._peer = new Peer(userInfoData["phoneId"],{
       key:   'b965b655-a8a7-4699-ac91-eb3792cc851d',
@@ -24,6 +23,7 @@ MainPage.prototype = {
     });
 
     //SkyWay イベントハンドラ
+    var _this = this;
     this._peer.on('open', () => {
       //シグナリングサーバ接続+準備完了時
       var id = _this._peer.id;
@@ -31,8 +31,7 @@ MainPage.prototype = {
     });
     this._peer.on('call', function(call){
       //通話着信時
-      alert("着信 → answer:" + this._localStream);
-      call.answer(this._localStream);
+      call.answer(_this._localStream);
       _this.startTalk(call);
     });
     this._peer.on('error', function(err){
@@ -190,7 +189,6 @@ MainPage.prototype = {
 
     // Wait for stream on the call, then set peer video display
     callTalking.on('stream', stream => {
-      alert("stream受信:" + stream);
       $('#their-video').get(0).srcObject = stream;
     });
 
