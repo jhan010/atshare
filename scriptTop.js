@@ -132,17 +132,3 @@ function displayControl(displayType) {
 
 }
 
-function callToUser(username) {
-  mainPage.callToUser(username);
-}
-
-function callStop() {
-  mainPage.callStop();
-}
-
-function testCallReady() {
-  mainPage.callReady();
-}
-function testClose() {
-  mainPage.displayControl(mainPage.ENUM_DISPLAY_CALLREADY);
-}
